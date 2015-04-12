@@ -3,9 +3,10 @@ import os
 import json
 from TwitterAPI import TwitterAPI
 import time
+import tokens
 from geopy.geocoders import Nominatim
 
-api = TwitterAPI('', '',  '', '')
+api = TwitterAPI(tokens.consumer_key, tokens.consumer_secret, tokens.access_token_key, tokens.access_token_secret)
 lat_iss = 0
 lon_iss = 0
 speed_iss = 0
