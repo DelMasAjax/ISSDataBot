@@ -63,9 +63,10 @@ while True:
 	time.sleep(5)
 	counter = counter + 1
 	print counter
-	if counter == 24:
-		if(location.address != None):
-			r = api.request('statuses/update', {'status':'Hi there! Now in: '+location.address+', speed: '+speed_short+', altitude: '+alt_short})
-			counter = 0
+	#if counter == 24:
+	if(location.address != None):
+		r = api.request('statuses/update', {'status':'Hi there! Now in: '+location.address+', speed: '+speed_short+', altitude: '+alt_short})
+		print r.status_code
+		counter = 0
 
 
