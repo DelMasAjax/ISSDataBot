@@ -15,7 +15,8 @@ speed_iss = 0
 alt_iss = 0
 lat_cli = 0
 lon_cli = 0
-counter = 0
+timestart = time.time()
+
 
 geolocator = Nominatim()
 print ("\nISS Tracking")
@@ -47,7 +48,7 @@ def doWork():
 	global alt_iss
 	global lat_cli
 	global lon_cli
-	global counter
+	global timestart
 	try:
 		lat_iss,lon_iss,speed_iss,alt_iss = iss_tracker()
 		location = geolocator.reverse([lat_iss,lon_iss])
@@ -66,13 +67,16 @@ def doWork():
 		print("\nPosition in Earth")
 		print(location.address)	
 		time.sleep(5)
-		counter = counter + 1
-		print counter
-		#if counter == 24:
-		if(location.address != None):
-			r = api.request('statuses/update', {'status':'Hi there! Now in: '+location.address+', speed: '+speed_short+', altitude: '+alt_short})
-			print r.status_code
-			counter = 0
+		# counter = time.time()
+		print round(time.time() - timestart)
+		if (round(time.time() - timestart) > 10):
+			if(location.address != None):
+				r = api.request('statuses/update', {'status':'Hi there! Now in: '+location.address+', speed: '+speed_short+', altitude: '+alt_short})
+				print r.status_code
+				print r.text
+				#print (time.time() - counter)
+				print time.time()
+				timestart = time.time()
 	except GeocoderTimedOut as e:
 		print "*BOOM*"
 
